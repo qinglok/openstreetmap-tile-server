@@ -1,5 +1,7 @@
 FROM ubuntu:18.04
 
+ADD run_import.sh /
+
 # Based on
 # https://switch2osm.org/manually-building-a-tile-server-18-04-lts/
 
@@ -16,8 +18,8 @@ RUN apt-get update \
   && echo "deb [ trusted=yes ] https://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" | tee /etc/apt/sources.list.d/pgdg.list \
   && wget --quiet -O - https://deb.nodesource.com/setup_10.x | bash - \
   && apt-get update \
-  && apt-get install -y nodejs
-  $$ wget https://download.geofabrik.de/asia-latest.osm.pbf -O /home/asia-latest.osm.pbf
+  && apt-get install -y nodejs \
+  $$ wget https://download.geofabrik.de/asia-latest.osm.pbf -O /data.osm.pbf
 
 RUN apt-get install -y --no-install-recommends \
   apache2 \
@@ -173,7 +175,8 @@ RUN mkdir -p /home/renderer/src \
  && cd regional \
  && git checkout 612fe3e040d8bb70d2ab3b133f3b2cfc6c940520 \
  && rm -rf .git \
- && chmod u+x /home/renderer/src/regional/trim_osc.py
+ && chmod u+x /home/renderer/src/regional/trim_osc.py \
+ && sh /run_import.sh
 
 # Start running
 COPY run.sh /
