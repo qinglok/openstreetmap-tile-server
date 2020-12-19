@@ -17,6 +17,7 @@ RUN apt-get update \
   && wget --quiet -O - https://deb.nodesource.com/setup_10.x | bash - \
   && apt-get update \
   && apt-get install -y nodejs
+  $$ wget https://download.geofabrik.de/asia-latest.osm.pbf -O /home/asia-latest.osm.pbf
 
 RUN apt-get install -y --no-install-recommends \
   apache2 \
