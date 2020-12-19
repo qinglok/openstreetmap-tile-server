@@ -18,8 +18,7 @@ RUN apt-get update \
   && echo "deb [ trusted=yes ] https://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" | tee /etc/apt/sources.list.d/pgdg.list \
   && wget --quiet -O - https://deb.nodesource.com/setup_10.x | bash - \
   && apt-get update \
-  && apt-get install -y nodejs \
-  $$ wget https://download.geofabrik.de/asia-latest.osm.pbf -O /data.osm.pbf
+  && apt-get install -y nodejs
 
 RUN apt-get install -y --no-install-recommends \
   apache2 \
@@ -80,6 +79,8 @@ RUN apt-get install -y --no-install-recommends \
 && apt-get clean autoclean \
 && apt-get autoremove --yes \
 && rm -rf /var/lib/{apt,dpkg,cache,log}/
+
+RUN wget https://download.geofabrik.de/asia-latest.osm.pbf -O /data.osm.pbf
 
 # Set up PostGIS
 RUN wget https://download.osgeo.org/postgis/source/postgis-3.0.0.tar.gz -O postgis.tar.gz \
