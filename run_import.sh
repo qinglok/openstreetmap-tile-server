@@ -77,5 +77,6 @@ function importAsia() {
 
 importAsia
 
+
 echo "invalid command"
 exit 1
